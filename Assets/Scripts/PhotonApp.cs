@@ -125,12 +125,17 @@ public class PhotonApp : Photon.MonoBehaviour
         {
           case 1:
             Debug.Log("箱が閉まる");
+            SendRPC("CloseBox");
             break;
           case 2:
             Debug.Log("箱が移動");
+            SendRPC("HideBox");
             break;
           case 3:
             Debug.Log("箱が到着");
+            // 開発時は毎回自分
+            string targetId = "1";
+            SendRPC("ShowBox", targetId);
             break;
           case 4:
             Debug.Log("箱が開く＆出題");
@@ -152,10 +157,30 @@ public class PhotonApp : Photon.MonoBehaviour
     }
   }
 
+  Box box;
   public void ShowBox(string message)
   {
     Debug.Log("ShowBox()");
-    // 未実装
+    if (message == PhotonNetwork.player.ID.ToString()) {
+      box = Box.Show(transform);
+    }
+  }
+
+  public void HideBox(string message)
+  {
+    Debug.Log("HideBox()");
+    if (box != null) {
+      box.Hide();
+      box = null;
+    }
+  }
+
+  public void CloseBox(string message)
+  {
+    Debug.Log("CloseBox()");
+    if (box != null) {
+      box.Close();
+    }
   }
 
   public Counter counter;

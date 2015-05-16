@@ -37,7 +37,7 @@ public class GameMain : MonoBehaviour {
         // スタートボタンの非表示
         GameObject.Find("StartButton").GetComponent<UIButton>().isEnabled = false;
         // プレゼントボックスのフェードイン
-        Box.Show(gameObject);
+        Box.Show(transform);
 
     }
 

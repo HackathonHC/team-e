@@ -14,4 +14,22 @@ public class RpcApp : MonoBehaviour
     Debug.Log("UpdateCounter: " + message);
     PhotonApp.instance.UpdateCounter(message);
   }
+
+  [RPC]
+  void ShowBox(string message) {
+    Debug.Log("ShowBox: " + message);
+    PhotonApp.instance.ShowBox(message);
+  }
+
+  [RPC]
+  void CloseBox(string message) {
+    Debug.Log("CloseBox: " + message);
+    PhotonApp.instance.CloseBox(message);
+  }
+
+  [RPC]
+  void HideBox(string message) {
+    Debug.Log("HideBox: " + message);
+    PhotonApp.instance.HideBox(message);
+  }
 }

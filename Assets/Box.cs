@@ -19,32 +19,32 @@ public class Box : MonoBehaviour {
   /// <summary>
   /// 表示移動
   /// </summary>
-  public static void Show(GameObject parent) {
+  public static Box Show(Transform parent) {
 
     GameObject go = (GameObject)Resources.Load("Prefabs/Box");
     GameObject box = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
-    box.transform.parent = parent.transform;
+    box.transform.parent = parent;
     box.transform.localScale = new Vector3(1.0f, 2.0f, 0.0f);
     box.transform.localPosition = new Vector3(520.0f, -728.0f, 0.0f);
-    TweenPosition _tween = TweenPosition.Begin(box, 0.5f, new Vector3(1.0f , -728.0f, 0.0f));
-    _tween.SetOnFinished(()=> {
-      ShowQuestion(parent, 1);
-    });
-
+    TweenPosition _tween = TweenPosition.Begin(box, 0.2f, new Vector3(1.0f , -728.0f, 0.0f));
+    return box.GetComponent<Box>();
   }
 
   /// <summary>
   /// 非表示移動
   /// </summary>
-  public static void Hide() {
+  public void Hide()
+  {
+    TweenPosition _tween = TweenPosition.Begin(gameObject, 0.2f, new Vector3(1000.0f , -728.0f, 0.0f));
+    _tween.SetOnFinished(()=> { Destroy(this); });
+  }
 
-    // GameObject go = (GameObject)Resources.Load("Prefabs/Box");
-    // GameObject box = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
-    // box.transform.parent = parent.transform;
-    // box.transform.localScale = new Vector3(1.0f, 2.0f, 0.0f);
-    // box.transform.localPosition = new Vector3(520.0f, -728.0f, 0.0f);
-    // TweenPosition _tween = TweenPosition.Begin(box, 0.5f, new Vector3(1.0f , -728.0f, 0.0f));
-
+  /// <summary>
+  /// ふたを閉じる
+  /// </summary>
+  public void Close()
+  {
+    // 未実装
   }
 
   /// <summary>

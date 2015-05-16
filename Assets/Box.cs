@@ -71,7 +71,6 @@ public class Box : MonoBehaviour {
 
         GameObject item = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
 
-
         item.transform.parent = baseGo.transform;
         item.transform.localScale = new Vector3(77.5f, 106.5f, 1);
         item.transform.localPosition = new Vector3(27, -392, 0);

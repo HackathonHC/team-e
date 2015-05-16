@@ -35,9 +35,11 @@ public class GameMain : MonoBehaviour {
     public void OnClickStart() {
 
         // スタートボタンの非表示
-        GameObject.Find("StartButton").GetComponent<UIButton>().isEnabled = false;
-        // プレゼントボックスのフェードイン
-        Box.Show(transform);
+        // GameObject.Find("StartButton").GetComponent<UIButton>().isEnabled = false;
+        // // プレゼントボックスのフェードイン
+        // Box.Show(transform);
+
+        PhotonApp.instance.StartGame();
 
     }
 

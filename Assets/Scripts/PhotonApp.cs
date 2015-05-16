@@ -112,11 +112,11 @@ public class PhotonApp : Photon.MonoBehaviour
     //サーバーとの接続状態をGUIへ表示
     GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
 
-    if (GUILayout.Button("StartGame")) {
-        //SendRPC("StartGame");
-        StartGame();
-        return;
-    }
+    // if (GUILayout.Button("StartGame")) {
+    //     //SendRPC("StartGame");
+    //     StartGame();
+    //     return;
+    // }
     GUILayout.Label(statusMessage);
   }
 
@@ -169,8 +169,9 @@ public class PhotonApp : Photon.MonoBehaviour
             break;
           case 3:
             statusMessage = "箱が到着";
+            string targetId = Random.Range(1, 3).ToString();
             // 開発時は毎回自分
-            string targetId = "1";
+            targetId = "1";
             SendRPC("ShowBox", targetId);
             break;
           case 4:

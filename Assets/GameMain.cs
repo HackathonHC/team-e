@@ -7,17 +7,18 @@ public class GameMain : MonoBehaviour {
 	void Start () {
 
 
-    // ボール
-    GameObject ball = (GameObject)Resources.Load("Prefabs/Ball");
 
-    //オブジェクトの座標
-    float x = Random.Range(0.0f, 2.0f);
-    float y = Random.Range(0.0f, 2.0f);
-    float z = 0.0f;
-    for (int i = 0; i < 50; i++) {
-      // プレハブからインスタンスを生成
-      Instantiate(ball, new Vector3(x, y, z), Quaternion.identity);
-    }
+        // ボール
+        GameObject ball = (GameObject)Resources.Load("Prefabs/Ball");
+
+        //オブジェクトの座標
+        float x = Random.Range(0.0f, 2.0f);
+        float y = Random.Range(0.0f, 2.0f);
+        float z = 0.0f;
+        for (int i = 0; i < 50; i++) {
+          // プレハブからインスタンスを生成
+          Instantiate(ball, new Vector3(x, y, z), Quaternion.identity);
+        }
 
 	}
 

@@ -30,7 +30,10 @@ public class GameMain : MonoBehaviour {
 	}
 
 
-    public void ClickStart() {
-        Debug.Log("aaaaaaaaaaaaaaaaaaaaaa");
+    public void OnClickStart() {
+
+
+
+
     }
 }

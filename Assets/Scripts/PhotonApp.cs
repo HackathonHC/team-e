@@ -230,11 +230,18 @@ public class PhotonApp : Photon.MonoBehaviour
     if (box != null) {
       itemsGo = box.ShowQuestion(transform, 1);
     }
+    PlaySE("question");
   }
 
   public void Ans(string message)
   {
     Debug.Log("Ans()");
+    if (2 < Random.Range(1, 4)) {
+      PlaySE("ng");
+    } else {
+      PlaySE("ok");
+    }
+    
   }
 
   public void SelectTarget(string message)

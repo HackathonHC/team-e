@@ -1,0 +1,15 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/onishi/work/hekk/github/toto"
+		},
+		{
+			"path": "/Users/onishi/work/hekk/github/toto_client"
+		},
+		{
+			"path": "."
+		}
+	],
+	"solution_file" : "./project_e-csharp.sln"
+}

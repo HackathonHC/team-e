@@ -1,9 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class PhotonApp : Photon.MonoBehaviour
 {
+  public GameObject audioGo;
+  public List<AudioSource> audios = new List<AudioSource>();
   protected static PhotonApp classInstance;
+  string statusMessage_;
+  string statusMessage {
+    get {return statusMessage_;}
+    set {
+      statusMessage_ = value;
+      Debug.Log(statusMessage_);
+    }
+  }
+
+  public void PlaySE(string name)
+  {
+    AudioSource audio = audioGo.AddComponent<AudioSource>();
+    audio.clip = Resources.Load<AudioClip>("BGM/" + name);
+    audio.Play();
+    audios.Add(audio);
+    foreach (AudioSource row in audios) {
+      if (!row.isPlaying) GameObject.Destroy(row);
+    }
+    audios.RemoveAll(row => !row.isPlaying);
+  }
 
   public static PhotonApp instance {
     get {
@@ -80,6 +104,7 @@ public class PhotonApp : Photon.MonoBehaviour
       go.transform.parent = transform.Find("others");
       go.transform.localScale = Vector3.one;
       go.transform.localPosition = new Vector3(-200 + (200 * i++), 0, 0);
+      go.GetComponentInChildren<UITexture>().mainTexture = Resources.Load<Texture>("Images/icon_" + i.ToString());
     }
   }
 
@@ -92,6 +117,7 @@ public class PhotonApp : Photon.MonoBehaviour
         StartGame();
         return;
     }
+    GUILayout.Label(statusMessage);
   }
 
   PhotonView rpcView;
@@ -105,8 +131,10 @@ public class PhotonApp : Photon.MonoBehaviour
   public void OnStartGame(string message)
   {
     Transform target = transform.Find("mine");
-    TweenPosition.Begin(target.gameObject, 0.1f, target.localPosition + new Vector3(0f, -500f, 0f));
-    
+    TweenPosition.Begin(target.gameObject, 0.1f, target.localPosition + new Vector3(0f, -800f, 0f));
+    target = transform.Find("StartButton");
+    TweenPosition.Begin(target.gameObject, 0.1f, target.localPosition + new Vector3(0f, -800f, 0f));
+    PlaySE("start");
   }
 
   public void StartGame()
@@ -132,35 +160,35 @@ public class PhotonApp : Photon.MonoBehaviour
         switch (current)
         {
           case 1:
-            Debug.Log("箱が閉まる");
+            statusMessage = "箱が閉まる";
             SendRPC("CloseBox");
             break;
           case 2:
-            Debug.Log("箱が移動");
+            statusMessage = "箱が移動";
             SendRPC("HideBox");
             break;
           case 3:
-            Debug.Log("箱が到着");
+            statusMessage = "箱が到着";
             // 開発時は毎回自分
             string targetId = "1";
             SendRPC("ShowBox", targetId);
             break;
           case 4:
-            Debug.Log("箱が開く＆出題");
+            statusMessage = "出題";
             SendRPC("ShowQuestion");
             break;
           case 5:
-            Debug.Log("考える");
+            statusMessage = "考える";
             break;
           case 6:
-            Debug.Log("考える");
+            statusMessage = "考える";
             break;
           case 7:
-            Debug.Log("解答！");
+            statusMessage = "解答！";
             SendRPC("Ans");
             break;
           case 8:
-            Debug.Log("指名");
+            statusMessage = "指名";
             SendRPC("SelectTarget");
             break;
         }

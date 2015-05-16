@@ -70,6 +70,7 @@ public class Box : MonoBehaviour {
         float z = 0.0f;
 
         GameObject item = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
+        item.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Images/item_1_" + Random.Range(1, 4).ToString());
 
         item.transform.parent = baseGo.transform;
         item.transform.localScale = new Vector3(77.5f, 106.5f, 1);

@@ -36,21 +36,21 @@ public class PhotonApp : Photon.MonoBehaviour
     // prefab
     GameObject prefab = (GameObject)Resources.Load("Prefabs/icon");
 
-    // 自分のアイコンを表示
-    GameObject go;
-    go = (GameObject)Instantiate(prefab);
-    go.transform.parent = transform;
-    go.transform.localScale = Vector3.one;
-    go.transform.localPosition = Vector3.zero;
+    // // 自分のアイコンを表示
+    // GameObject go;
+    // go = (GameObject)Instantiate(prefab);
+    // go.transform.parent = transform;
+    // go.transform.localScale = Vector3.one;
+    // go.transform.localPosition = Vector3.zero;
 
-    // 他プレイヤーのアイコンを表示
-    int i = 0;
-    foreach (PhotonPlayer _p in PhotonNetwork.otherPlayers) {
-      go = (GameObject)Instantiate(prefab, Vector3.zero, Quaternion.identity);
-      go.transform.parent = transform;
-      go.transform.localScale = Vector3.one;
-      go.transform.localPosition = new Vector3(-100 + (100 * i), 0, 0);
-    }
+    // // 他プレイヤーのアイコンを表示
+    // int i = 0;
+    // foreach (PhotonPlayer _p in PhotonNetwork.otherPlayers) {
+    //   go = (GameObject)Instantiate(prefab, Vector3.zero, Quaternion.identity);
+    //   go.transform.parent = transform;
+    //   go.transform.localScale = Vector3.one;
+    //   go.transform.localPosition = new Vector3(-100 + (100 * i), 0, 0);
+    // }
   }
 
   void OnGUI() {
@@ -60,6 +60,7 @@ public class PhotonApp : Photon.MonoBehaviour
 
   void OnClick()
   {
+    Debug.Log("OnClick");
     if (PhotonNetwork.connectionStateDetailed != PeerState.Joined)
     {
       // only use PhotonNetwork.Instantiate while in a room.

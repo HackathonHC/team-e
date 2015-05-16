@@ -52,9 +52,11 @@ public class Box : MonoBehaviour {
   /// </summary>
   public static void ShowQuestion(GameObject parent, int questionId) {
 
+    // TODO:questionIdに基いて問題を生成する
+
     GameObject go = (GameObject)Resources.Load("Prefabs/Item");
 
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 10; i++) {
 
         //オブジェクトの座標
         float x = Random.Range(0.0f, 2.0f);

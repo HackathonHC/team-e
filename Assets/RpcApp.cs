@@ -10,6 +10,12 @@ public class RpcApp : MonoBehaviour
   }
 
   [RPC]
+  void OnStartGame(string message) {
+    Debug.Log("OnStartGame: " + message);
+    PhotonApp.instance.OnStartGame(message);
+  }
+
+  [RPC]
   void UpdateCounter(string message) {
     Debug.Log("UpdateCounter: " + message);
     PhotonApp.instance.UpdateCounter(message);
@@ -31,5 +37,23 @@ public class RpcApp : MonoBehaviour
   void HideBox(string message) {
     Debug.Log("HideBox: " + message);
     PhotonApp.instance.HideBox(message);
+  }
+
+  [RPC]
+  void ShowQuestion(string message) {
+    Debug.Log("ShowQuestion: " + message);
+    PhotonApp.instance.ShowQuestion(message);
+  }
+
+  [RPC]
+  void SelectTarget(string message) {
+    Debug.Log("SelectTarget: " + message);
+    PhotonApp.instance.SelectTarget(message);
+  }
+
+  [RPC]
+  void Ans(string message) {
+    Debug.Log("Ans: " + message);
+    PhotonApp.instance.Ans(message);
   }
 }

@@ -102,9 +102,17 @@ public class PhotonApp : Photon.MonoBehaviour
     rpcView.RPC(methodName, PhotonTargets.All, str);
   }
 
+  public void OnStartGame(string message)
+  {
+    Transform target = transform.Find("mine");
+    TweenPosition.Begin(target.gameObject, 0.1f, target.localPosition + new Vector3(0f, -500f, 0f));
+    
+  }
+
   public void StartGame()
   {
     Debug.Log("StartGame()");
+    SendRPC("OnStartGame");
     started = true;
   }
 
@@ -116,7 +124,7 @@ public class PhotonApp : Photon.MonoBehaviour
     if (PhotonNetwork.isMasterClient && started) {
       // 拍子を取る
       time += Time.deltaTime;
-      int _val = (int)(time / 0.4f);
+      int _val = ((int)(time / 0.5207f) % 8) + 1;
       if (_val != current) {
         Debug.Log("拍子が変わった");
         current = _val;
@@ -139,6 +147,7 @@ public class PhotonApp : Photon.MonoBehaviour
             break;
           case 4:
             Debug.Log("箱が開く＆出題");
+            SendRPC("ShowQuestion");
             break;
           case 5:
             Debug.Log("考える");
@@ -148,9 +157,11 @@ public class PhotonApp : Photon.MonoBehaviour
             break;
           case 7:
             Debug.Log("解答！");
+            SendRPC("Ans");
             break;
           case 8:
             Debug.Log("指名");
+            SendRPC("SelectTarget");
             break;
         }
       }
@@ -178,6 +189,37 @@ public class PhotonApp : Photon.MonoBehaviour
   public void CloseBox(string message)
   {
     Debug.Log("CloseBox()");
+    if (box != null) {
+      box.Close();
+    }
+  }
+
+  GameObject itemsGo;
+  public void ShowQuestion(string message)
+  {
+    Debug.Log("ShowQuestion()");
+    itemsGo = null;
+    if (box != null) {
+      itemsGo = box.ShowQuestion(transform, 1);
+    }
+  }
+
+  public void Ans(string message)
+  {
+    Debug.Log("Ans()");
+  }
+
+  public void SelectTarget(string message)
+  {
+    Debug.Log("SelectTarget()");
+    if (itemsGo != null) {
+      Destroy(itemsGo);
+      // foreach (Transform child in itemsGo.transform) {
+      //   Destroy(child.gameObject);
+      //   TweenPosition tw = TweenPosition.Begin(child.gameObject, 0.1f, new Vector3(1000, 1000, 0));
+      //   tw.SetOnFinished(()=> { Destroy(child.gameObject); });
+      // }
+    }
     if (box != null) {
       box.Close();
     }

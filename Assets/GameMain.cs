@@ -29,11 +29,16 @@ public class GameMain : MonoBehaviour {
 
 	}
 
-
+    /// <summary>
+    /// ゲームスタートボタンクリック
+    /// </summary>
     public void OnClickStart() {
 
-
-
+        // スタートボタンの非表示
+        GameObject.Find("StartButton").GetComponent<UIButton>().isEnabled = false;
+        // プレゼントボックスのフェードイン
+        Box.Show(gameObject);
 
     }
+
 }

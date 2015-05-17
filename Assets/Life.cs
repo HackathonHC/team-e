@@ -3,13 +3,16 @@ using System.Collections;
 
 public class Life : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+  public int lifeCount = 3;
+  /// <summary>
+  /// ダメージ
+  /// </summary>
+  public int damage() {
+    if (lifeCount == 0) {
+      return lifeCount;
+    }
+    return lifeCount--;
+  }
+
 }
+

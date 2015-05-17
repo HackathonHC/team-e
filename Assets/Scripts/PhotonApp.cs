@@ -146,27 +146,33 @@ public class PhotonApp : Photon.MonoBehaviour
     PlaySE("start");
     Music.CurrentSource.Play();
 
-    // 自分のライフを表示
-
-    // GameObject go;
-    // go = (GameObject)Instantiate(prefab);
-    // go.transform.parent = transform.Find("mine");
-    // go.transform.localScale = Vector3.one;
-    // go.transform.localPosition = Vector3.zero;
-
+    ShowLife();
   }
 
-  int life = 3;
   public void ShowLife() {
     // prefab
-    GameObject prefab = (GameObject)Resources.Load("Prefabs/hart");
+    GameObject heartGo = (GameObject)Resources.Load("Prefabs/heart");
 
     // 自分のライフを表示
-    GameObject go;
-    go = (GameObject)Instantiate(prefab);
-    go.transform.parent = transform.Find("life");
-    go.transform.localScale = Vector3.one;
-    go.transform.localPosition = Vector3.zero;
+    heartGo = (GameObject)Instantiate(heartGo);
+    heartGo.transform.parent = transform.Find("life");
+    heartGo.transform.localScale = Vector3.one;
+    heartGo.transform.localPosition = new Vector3(-150, 0, 0);
+
+    heartGo = (GameObject)Instantiate(heartGo);
+    heartGo.transform.parent = transform.Find("life");
+    heartGo.transform.localScale = Vector3.one;
+    heartGo.transform.localPosition = new Vector3(0, 0, 0);
+
+    heartGo = (GameObject)Instantiate(heartGo);
+    heartGo.transform.parent = transform.Find("life");
+    heartGo.transform.localScale = Vector3.one;
+    heartGo.transform.localPosition = new Vector3(150, 0, 0);
+
+
+    // transform.Find("life").gameObject.transform.localPosition = new Vector3(0, 300, 0);
+    // TweenPosition.Begin(transform.Find("life").gameObject, 0.2f, heartGo.localPosition + new Vector3(0f, -300f, 0f));
+
 
 
   }

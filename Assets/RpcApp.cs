@@ -68,4 +68,10 @@ public class RpcApp : MonoBehaviour
     Debug.Log("ClearQuestion: " + message);
     PhotonApp.instance.ClearQuestion(message);
   }
+
+  [RPC]
+  void Timeup(string message) {
+    Debug.Log("Timeup: " + message);
+    PhotonApp.instance.Timeup(message);
+  }
 }

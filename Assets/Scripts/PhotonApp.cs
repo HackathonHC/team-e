@@ -210,6 +210,7 @@ public class PhotonApp : Photon.MonoBehaviour
           case 8:
             statusMessage = "指名";
             difficulty++;
+            SendRPC("Timeup");
             break;
         }
       }
@@ -288,14 +289,22 @@ public class PhotonApp : Photon.MonoBehaviour
     }
     PlaySE("question");
     answer = false;
+    timeup = true;
   }
 
+  public bool timeup = true;
   public bool answer = false;
   public void Answer(bool correct)
   {
-    if ((current != 5 && current != 6 && current != 7) || answer == true) return;
+    if ((current != 5 && current != 6 && current != 7)) return;
+    timeup = false;
+    if (answer == true) return;
+    AnswerCore(correct);
+  }
+
+  public void AnswerCore(bool correct)
+  {
     SendRPC("Ans", (correct ? "ok" : "ng"));
-    Debug.LogWarning(correct);
     if (correct) {
       PlaySE("ok");
     } else {
@@ -321,7 +330,11 @@ Debug.Log(nowLife);
         });
       }
     }
+  }
 
+  public void Timeup(string message)
+  {
+    if (box != null && timeup) AnswerCore(false);
   }
 
   public void SetTarget(string id)

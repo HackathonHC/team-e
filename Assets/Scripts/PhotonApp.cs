@@ -129,7 +129,7 @@ public class PhotonApp : Photon.MonoBehaviour
   }
 
   PhotonView rpcView;
-  private void SendRPC(string methodName, string str = "") {
+  public void SendRPC(string methodName, string str = "") {
     if (rpcView == null) {
       rpcView = transform.Find("rpc").GetComponent<PhotonView>();
     }
@@ -142,6 +142,7 @@ public class PhotonApp : Photon.MonoBehaviour
     TweenPosition.Begin(target.gameObject, 0.2f, target.localPosition + new Vector3(0f, -800f, 0f));
     target = transform.Find("StartButton");
     TweenPosition.Begin(target.gameObject, 0.2f, target.localPosition + new Vector3(0f, -800f, 0f));
+    TweenAlpha.Begin(transform.Find("others").gameObject, 0.2f, 1f);
     TweenAlpha.Begin(transform.Find("GameUI").gameObject, 0.2f, 1f);
     PlaySE("start");
     Music.CurrentSource.Play();

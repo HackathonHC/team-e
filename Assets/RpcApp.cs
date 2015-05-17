@@ -56,4 +56,16 @@ public class RpcApp : MonoBehaviour
     Debug.Log("Ans: " + message);
     PhotonApp.instance.Ans(message);
   }
+
+  [RPC]
+  void SendQuestion(string message) {
+    Debug.Log("SendQuestion: " + message);
+    PhotonApp.instance.SendQuestion(message);
+  }
+
+  [RPC]
+  void ClearQuestion(string message) {
+    Debug.Log("ClearQuestion: " + message);
+    PhotonApp.instance.ClearQuestion(message);
+  }
 }

@@ -100,7 +100,6 @@ public class Box : MonoBehaviour {
     };
     positions = new List<Vector3>(positions.RandomShuffle());
     GameObject itemGo;
-    Debug.Log(positions[0]);
     for (int i = 0; i < 6; i++) {
 
         itemGo = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);

@@ -84,41 +84,63 @@ public class Box : MonoBehaviour {
 
     GameObject baseGo = new GameObject();
     baseGo.transform.parent = parent;
-    baseGo.transform.localPosition = new Vector3(-26, 135, -1);
+    baseGo.transform.localPosition = new Vector3(0, 135, -1);
     baseGo.transform.localScale = Vector3.one;
     baseGo.name = "Items";
 
     GameObject go = (GameObject)Resources.Load("Prefabs/Item");
     List<Sprite> sprites = new List<Sprite>();
+    List<Vector3> positions = new List<Vector3>{
+      new Vector3(-218, -238, 0),
+      new Vector3(-218, 21, 0),
+      new Vector3(0, -238, 0),
+      new Vector3(0, 21, 0),
+      new Vector3(218, -238, 0),
+      new Vector3(218, 21, 0)
+    };
+    positions.RandomShuffle();
+    GameObject item;
     for (int i = 0; i < 6; i++) {
 
-        //オブジェクトの座標
-        float x = Random.Range(-221, 260);
-        float y = Random.Range(-100, 154);
-        float z = 0.0f;
-
-        GameObject item = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
+        item = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
 
         string name = "Images/question/" + questionId + "-" + (i + 1).ToString();
         Sprite sprite = Resources.Load<Sprite>(name);
 
-        if (sprite != null) {
-          sprites.Add(sprite);
-        } else {
+        if (sprite == null) {
           sprite = sprites[Random.Range(1, sprites.Count)];
+        } else {
+          sprites.Add(sprite);
         }
         item.GetComponent<SpriteRenderer>().sprite = sprite;
 
         item.transform.parent = baseGo.transform;
-        item.transform.localScale = new Vector3(77.5f, 106.5f, 1);
+        item.transform.localScale = new Vector3(80f, 75f, 1);
         item.transform.localPosition = new Vector3(27, -392, 0);
-        TweenPosition.Begin(item, 0.15f, new Vector3(x, y, z));
+        TweenPosition.Begin(item, 0.15f, positions[i]);
 
     }
+
+    // 正解
+    item = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
+    item.GetComponent<SpriteRenderer>().sprite = sprites[0];
+    item.transform.parent = baseGo.transform;
+    item.transform.localScale = new Vector3(80f, 75f, 1);
+    item.transform.localPosition = new Vector3(27, -392, 0);
+    TweenPosition.Begin(item, 0.15f, new Vector3(27, -592, 0));
     return baseGo;
 
   }
-
-
-
+}
+public static class ShuffleExtensions
+{
+    public static IEnumerable<tsource>
+           RandomShuffle<tsource>(this IEnumerable<tsource> source)
+    {
+        return source.Select(t => new {
+                Index = System.Guid.NewGuid(),
+                Value = t })
+            .OrderBy(p => p.Index)
+            .Select(p => p.Value);
+    }
 }

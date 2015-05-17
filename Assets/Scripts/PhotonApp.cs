@@ -145,6 +145,7 @@ public class PhotonApp : Photon.MonoBehaviour
     started = true;
   }
 
+  public string nextTargetId = "1";
   public float time;
   public bool started;
   public int current = -1;
@@ -170,10 +171,7 @@ public class PhotonApp : Photon.MonoBehaviour
             break;
           case 3:
             statusMessage = "箱が到着";
-            string targetId = Random.Range(1, 3).ToString();
-            // 開発時は毎回自分
-            targetId = "1";
-            SendRPC("ShowBox", targetId);
+            SendRPC("ShowBox", nextTargetId);
             break;
           case 4:
             statusMessage = "出題";
@@ -187,11 +185,9 @@ public class PhotonApp : Photon.MonoBehaviour
             break;
           case 7:
             statusMessage = "解答！";
-            SendRPC("Ans");
             break;
           case 8:
             statusMessage = "指名";
-            SendRPC("SelectTarget");
             break;
         }
       }
@@ -236,13 +232,25 @@ public class PhotonApp : Photon.MonoBehaviour
     PlaySE("question");
   }
 
+  public void Answer(bool correct)
+  {
+    return if (currnet != 7) return;
+    SendRPC("Ans", (correct ? "ok" : "ng"));
+  }
+
+  public void SetTarget(string id)
+  {
+    return if (currnet != 8) return;
+    SendRPC("SelectTarget", id);
+  }
+
   public void Ans(string message)
   {
     Debug.Log("Ans()");
-    if (2 < Random.Range(1, 4)) {
-      PlaySE("ng");
-    } else {
+    if (message == "ok") {
       PlaySE("ok");
+    } else {
+      PlaySE("ng");
     }
     
   }
@@ -252,12 +260,8 @@ public class PhotonApp : Photon.MonoBehaviour
     Debug.Log("SelectTarget()");
     if (itemsGo != null) {
       Destroy(itemsGo);
-      // foreach (Transform child in itemsGo.transform) {
-      //   Destroy(child.gameObject);
-      //   TweenPosition tw = TweenPosition.Begin(child.gameObject, 0.1f, new Vector3(1000, 1000, 0));
-      //   tw.SetOnFinished(()=> { Destroy(child.gameObject); });
-      // }
     }
+    nextTargetId = message;
   }
 
   public Counter counter;

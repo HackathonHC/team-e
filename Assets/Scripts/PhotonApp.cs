@@ -68,14 +68,14 @@ public class PhotonApp : Photon.MonoBehaviour
   void OnJoinedLobby() {
     //ランダムにルームへ参加
     RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 4 };
-    PhotonNetwork.JoinOrCreateRoom("test1", roomOptions, TypedLobby.Default);
+    PhotonNetwork.JoinOrCreateRoom("test2", roomOptions, TypedLobby.Default);
   }
 
   //ルーム参加失敗時のコールバック
   void OnPhotonRandomJoinFailed() {
     Debug.Log("ルームへの参加に失敗しました");
     //名前のないルームを作成
-    PhotonNetwork.CreateRoom("test1");
+    PhotonNetwork.CreateRoom("test2");
   }
 
   //ルーム参加成功時のコールバック
@@ -239,11 +239,14 @@ public class PhotonApp : Photon.MonoBehaviour
   }
 
   Box box;
+  Box miniBox;
   public void ShowBox(string message)
   {
     Debug.Log("ShowBox()");
     if (message == PhotonNetwork.player.ID.ToString()) {
       box = Box.Show(transform);
+    } else {
+      miniBox = Box.Show(transform, message);
     }
   }
 
@@ -254,6 +257,10 @@ public class PhotonApp : Photon.MonoBehaviour
       box.Hide();
       box = null;
     }
+    if (miniBox != null) {
+      miniBox.Hide();
+      miniBox = null;
+    }
   }
 
   public void CloseBox(string message)
@@ -261,6 +268,9 @@ public class PhotonApp : Photon.MonoBehaviour
     Debug.Log("CloseBox()");
     if (box != null) {
       box.Close();
+    }
+    if (miniBox != null) {
+      miniBox.Close();
     }
   }
 
@@ -280,6 +290,7 @@ public class PhotonApp : Photon.MonoBehaviour
       itemsGo = box.ShowQuestion(transform, questionId);
     }
     PlaySE("question");
+    answer = false;
   }
 
   public bool answer = false;

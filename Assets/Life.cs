@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Life : MonoBehaviour {
 
-  public int lifeCount = 3;
+  private int lifeCount = 3;
   /// <summary>
   /// ダメージ
   /// </summary>
@@ -11,7 +11,13 @@ public class Life : MonoBehaviour {
     if (lifeCount == 0) {
       return lifeCount;
     }
-    return lifeCount--;
+    int now = this.lifeCount;
+    GameObject goOld = gameObject.transform.FindChild(now.ToString()).gameObject;
+    goOld.SetActive(false);
+    lifeCount = lifeCount - 1;
+    GameObject go = gameObject.transform.FindChild(lifeCount.ToString()).gameObject;
+    go.SetActive(true);
+    return lifeCount;
   }
 
 }

@@ -138,6 +138,30 @@ public class PhotonApp : Photon.MonoBehaviour
     TweenAlpha.Begin(transform.Find("GameUI").gameObject, 0.2f, 1f);
     PlaySE("start");
     Music.CurrentSource.Play();
+
+    // 自分のライフを表示
+
+    // GameObject go;
+    // go = (GameObject)Instantiate(prefab);
+    // go.transform.parent = transform.Find("mine");
+    // go.transform.localScale = Vector3.one;
+    // go.transform.localPosition = Vector3.zero;
+
+  }
+
+  int life = 3;
+  public void ShowLife() {
+    // prefab
+    GameObject prefab = (GameObject)Resources.Load("Prefabs/hart");
+
+    // 自分のライフを表示
+    GameObject go;
+    go = (GameObject)Instantiate(prefab);
+    go.transform.parent = transform.Find("life");
+    go.transform.localScale = Vector3.one;
+    go.transform.localPosition = Vector3.zero;
+
+
   }
 
   public void StartGame()
@@ -244,7 +268,7 @@ public class PhotonApp : Photon.MonoBehaviour
   public bool answer = false;
   public void Answer(bool correct)
   {
-    if (current != 5 && current != 6 && current != 7) return;
+    if ((current != 5 && current != 6 && current != 7) || answer == true) return;
     SendRPC("Ans", (correct ? "ok" : "ng"));
     Debug.LogWarning(correct);
     if (correct) {
@@ -257,7 +281,7 @@ public class PhotonApp : Photon.MonoBehaviour
 
   public void SetTarget(string id)
   {
-    if (current != 7 && current != 8) return;
+    if ((current != 7 && current != 8) || answer == false) return;
     SendRPC("SelectTarget", id);
     PlaySE("ok2");
   }

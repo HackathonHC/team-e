@@ -126,8 +126,8 @@ public class Box : MonoBehaviour {
     item.GetComponent<SpriteRenderer>().sprite = sprites[0];
     item.transform.parent = baseGo.transform;
     item.transform.localScale = new Vector3(80f, 75f, 1);
-    item.transform.localPosition = new Vector3(27, -392, 0);
-    TweenPosition.Begin(item, 0.15f, new Vector3(27, -592, 0));
+    item.transform.localPosition = new Vector3(0, -392, 0);
+    TweenPosition.Begin(item, 0.15f, new Vector3(0, -519, 0));
     return baseGo;
 
   }

@@ -143,6 +143,7 @@ public class PhotonApp : Photon.MonoBehaviour
     Debug.Log("StartGame()");
     SendRPC("OnStartGame");
     started = true;
+    Music.CurrentSource.Play();
   }
 
   public string nextTargetId = "1";

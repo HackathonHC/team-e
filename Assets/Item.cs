@@ -3,13 +3,20 @@ using System.Collections;
 
 public class Item : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+  private bool correct;
+  public void Correct(bool correct) {
+    this.correct = correct;
+  }
+  // public bool isCorrect() {
+  //   return this.correct;
+  // }
+
+  public void OnClick() {
+    if (this.correct) {
+      Debug.Log("【やったね】正解アイテム押したよ");
+    } else {
+      Debug.Log("【ざんねん】不正解アイテム押したよ");
+    }
+    PhotonApp.instance.Answer(this.correct);
+  }
 }

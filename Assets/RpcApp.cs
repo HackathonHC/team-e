@@ -74,4 +74,10 @@ public class RpcApp : MonoBehaviour
     Debug.Log("Timeup: " + message);
     PhotonApp.instance.Timeup(message);
   }
+
+  [RPC]
+  void Lose(string message) {
+    Debug.Log("Lose: " + message);
+    PhotonApp.instance.Lose(message);
+  }
 }

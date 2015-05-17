@@ -146,6 +146,8 @@ public class PhotonApp : Photon.MonoBehaviour
     TweenAlpha.Begin(transform.Find("GameUI").gameObject, 0.2f, 1f);
     PlaySE("start");
     Music.CurrentSource.Play();
+    finished = false;
+    lose = false;
 
   }
 
@@ -167,7 +169,7 @@ public class PhotonApp : Photon.MonoBehaviour
   public int before = -1;
   void Update()
   {
-    if (PhotonNetwork.isMasterClient && started) {
+    if (PhotonNetwork.isMasterClient && started && !finished) {
       // 拍子を取る
       time += Time.deltaTime;
       int _val = ((int)(time / 0.5207f) % 8) + 1;
@@ -328,7 +330,26 @@ Debug.Log(nowLife);
         tw.SetOnFinished(() => {
           TweenScale.Begin(gg, 0.1f, new Vector3(1, 1, 1));
         });
+        SendRPC("Lose");
+        lose = true;
+        finished = true;
       }
+    }
+  }
+
+  bool finished = false;
+  bool lose = false;
+  public void Lose(string message)
+  {
+    if (!lose) {
+      finished = true;
+      GameObject gg = transform.Find("GameUI/Win").gameObject;
+      gg.SetActive(true);
+      gg.transform.localScale = new Vector3(3, 3, 1);
+      TweenScale tw = TweenScale.Begin(gg, 0.2f, new Vector3(0.8f, 0.8f, 1));
+      tw.SetOnFinished(() => {
+        TweenScale.Begin(gg, 0.1f, new Vector3(1, 1, 1));
+      });
     }
   }
 

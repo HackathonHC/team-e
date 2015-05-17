@@ -68,14 +68,14 @@ public class PhotonApp : Photon.MonoBehaviour
   void OnJoinedLobby() {
     //ランダムにルームへ参加
     RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 4 };
-    PhotonNetwork.JoinOrCreateRoom("test2", roomOptions, TypedLobby.Default);
+    PhotonNetwork.JoinOrCreateRoom("test3", roomOptions, TypedLobby.Default);
   }
 
   //ルーム参加失敗時のコールバック
   void OnPhotonRandomJoinFailed() {
     Debug.Log("ルームへの参加に失敗しました");
     //名前のないルームを作成
-    PhotonNetwork.CreateRoom("test2");
+    PhotonNetwork.CreateRoom("test3");
   }
 
   //ルーム参加成功時のコールバック
@@ -120,11 +120,11 @@ public class PhotonApp : Photon.MonoBehaviour
     //サーバーとの接続状態をGUIへ表示
     GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
 
-    // if (GUILayout.Button("StartGame")) {
-    //     //SendRPC("StartGame");
-    //     StartGame();
-    //     return;
-    // }
+    if (GUILayout.Button("Send")) {
+        SendRPC("SendQuestion", "http://img.tiqav.com/5i.jpg,http://img.tiqav.com/5j.jpg");
+        //StartGame();
+        return;
+    }
     GUILayout.Label(statusMessage);
   }
 
@@ -251,6 +251,21 @@ public class PhotonApp : Photon.MonoBehaviour
     Debug.Log("ShowBox()");
     if (message == PhotonNetwork.player.ID.ToString()) {
       box = Box.Show(transform);
+
+      if (stockUrls == "") {
+        int[] ids = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 20, 21, 22, 23, 24, 25, 30, 31, 32, 40, 41};
+        questionId = 1;
+        if (difficulty < 3) {
+          questionId = ids[Random.Range(0, 17)];
+        } else {
+          questionId = ids[Random.Range(0, ids.Length)];
+        }
+        box.ShowCollect(transform, questionId);
+      } else {
+        questionUrls = stockUrls;
+        box.ShowCollect(transform, questionUrls);
+        SendRPC("ClearQuestion");
+      }
     } else {
       miniBox = Box.Show(transform, message);
     }
@@ -280,20 +295,20 @@ public class PhotonApp : Photon.MonoBehaviour
     }
   }
 
+  int questionId;
   GameObject itemsGo;
   public void ShowQuestion(string message)
   {
     Debug.Log("ShowQuestion()");
     itemsGo = null;
     if (box != null) {
-      int[] ids = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 20, 21, 22, 23, 24, 25, 30, 31, 32, 40, 41};
-      int questionId = 1;
-      if (difficulty < 3) {
-        questionId = ids[Random.Range(0, 17)];
+      if (questionUrls == "") {
+        itemsGo = box.ShowQuestion(questionId);
       } else {
-        questionId = ids[Random.Range(0, ids.Length)];
+        itemsGo = box.ShowQuestion(questionUrls);
+        questionUrls = "";
       }
-      itemsGo = box.ShowQuestion(transform, questionId);
+      //itemsGo = box.ShowQuestion(transform);
     }
     PlaySE("question");
     answer = false;
@@ -355,6 +370,18 @@ Debug.Log(nowLife);
       Destroy(itemsGo);
       itemsGo = null;
     }
+  }
+
+  string stockUrls = "";
+  string questionUrls = "";
+  public void SendQuestion(string message)
+  {
+    stockUrls = message;
+  }
+
+  public void ClearQuestion(string message)
+  {
+    stockUrls = "";
   }
 
   public Counter counter;

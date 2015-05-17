@@ -16,8 +16,22 @@ public class Item : MonoBehaviour {
     if (this.isClick) {return;}
     if (this.correct) {
       Debug.Log("【やったね】正解アイテム押したよ");
+      GameObject prefab = (GameObject)Resources.Load("SS/marubatu/Prefab/maru");
+
+      // 自分のライフを表示
+      GameObject go = (GameObject)Instantiate(prefab);
+      go.transform.parent = transform.parent;
+      //go.transform.localScale = Vector3.one;
+      go.transform.localPosition = new Vector3(0, -120, 0);
     } else {
       Debug.Log("【ざんねん】不正解アイテム押したよ");
+      GameObject prefab = (GameObject)Resources.Load("SS/marubatu/Prefab/batsu");
+
+      // 自分のライフを表示
+      GameObject go = (GameObject)Instantiate(prefab);
+      go.transform.parent = transform.parent;
+      //go.transform.localScale = Vector3.one;
+      go.transform.localPosition = new Vector3(0, -120, 0);
     }
     isClick = true;
     PhotonApp.instance.Answer(this.correct);

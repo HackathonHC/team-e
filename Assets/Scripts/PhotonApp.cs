@@ -245,6 +245,14 @@ public class PhotonApp : Photon.MonoBehaviour
     Debug.Log("ShowBox()");
     if (message == PhotonNetwork.player.ID.ToString()) {
       box = Box.Show(transform);
+      int[] ids = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 20, 21, 22, 23, 24, 25, 30, 31, 32, 40, 41};
+      questionId = 1;
+      if (difficulty < 3) {
+        questionId = ids[Random.Range(0, 17)];
+      } else {
+        questionId = ids[Random.Range(0, ids.Length)];
+      }
+      box.ShowCollect(transform, questionId);
     } else {
       miniBox = Box.Show(transform, message);
     }
@@ -274,20 +282,15 @@ public class PhotonApp : Photon.MonoBehaviour
     }
   }
 
+  int questionId;
   GameObject itemsGo;
   public void ShowQuestion(string message)
   {
     Debug.Log("ShowQuestion()");
     itemsGo = null;
     if (box != null) {
-      int[] ids = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 20, 21, 22, 23, 24, 25, 30, 31, 32, 40, 41};
-      int questionId = 1;
-      if (difficulty < 3) {
-        questionId = ids[Random.Range(0, 17)];
-      } else {
-        questionId = ids[Random.Range(0, ids.Length)];
-      }
-      itemsGo = box.ShowQuestion(transform, questionId);
+      itemsGo = box.ShowQuestion(questionId);
+      //itemsGo = box.ShowQuestion(transform);
     }
     PlaySE("question");
     answer = false;

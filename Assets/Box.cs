@@ -90,19 +90,14 @@ public class Box : MonoBehaviour {
 
   }
 
+  Sprite correctImage; 
   /// <summary>
   /// 問題表示
   /// </summary>
-  public GameObject ShowQuestion(Transform parent, int questionId) {
+  public GameObject ShowQuestion(int questionId) {
 
     // TODO:questionIdに基いて問題を生成する
     Open();
-
-    GameObject baseGo = new GameObject();
-    baseGo.transform.parent = parent;
-    baseGo.transform.localPosition = new Vector3(0, 135, -1);
-    baseGo.transform.localScale = Vector3.one;
-    baseGo.name = "Items";
 
     GameObject go = (GameObject)Resources.Load("Prefabs/Item");
     List<Sprite> sprites = new List<Sprite>();
@@ -127,6 +122,7 @@ public class Box : MonoBehaviour {
           sprite = sprites[Random.Range(1, sprites.Count)];
         } else {
           sprites.Add(sprite);
+          if (correctImage == null) correctImage = sprite;
         }
         itemGo.GetComponent<SpriteRenderer>().sprite = sprite;
         itemGo.transform.parent = baseGo.transform;
@@ -138,16 +134,42 @@ public class Box : MonoBehaviour {
         item.Correct((i == 0) ? true : false);
 
     }
+    return baseGo;
+  }
 
+  GameObject baseGo;
+  public void ShowCollect(Transform parent, int questionId)
+  {
+    baseGo = new GameObject();
+    baseGo.transform.parent = parent;
+    baseGo.transform.localPosition = new Vector3(0, 135, -1);
+    baseGo.transform.localScale = Vector3.one;
+    baseGo.name = "Items";
+
+    string name = "Images/question/" + questionId + "-1";
+    Sprite sprite = Resources.Load<Sprite>(name);
+
+    GameObject itemGo;
+    GameObject go = (GameObject)Resources.Load("Prefabs/Item");
     // 正解
     itemGo = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
-    itemGo.GetComponent<SpriteRenderer>().sprite = sprites[0];
+    itemGo.GetComponent<SpriteRenderer>().sprite = sprite;
     itemGo.transform.parent = baseGo.transform;
     itemGo.transform.localScale = new Vector3(80f, 75f, 1);
-    itemGo.transform.localPosition = new Vector3(0, -392, 0);
-    TweenPosition.Begin(itemGo, 0.15f, new Vector3(0, -519, 0));
-    return baseGo;
+    itemGo.transform.localPosition = new Vector3(0, -519, 0);
+    
+    itemGo.transform.localPosition = new Vector3(520.0f, -506.0f, 0.0f);
+    TweenPosition _tween = TweenPosition.Begin(itemGo, 0.05f, itemGo.transform.localPosition + new Vector3(-520, 0, 0));
+  }
 
+          // string url = "http://img.tiqav.com/5i.jpg";
+          // StartCoroutine(FetchAndSetTexture(url, itemGo.GetComponent<SpriteRenderer>()));
+  IEnumerator FetchAndSetTexture(string url, SpriteRenderer sprite)
+  {
+    var www = new WWW(url);
+    yield return www;
+    sprite.sprite = Sprite.Create(www.texture, new Rect(0,0,www.texture.width,www.texture.height), Vector2.zero);
+    if (correctImage == null) correctImage = sprite.sprite;
   }
 }
 public static class ShuffleExtensions

@@ -374,7 +374,7 @@ Debug.Log(nowLife);
   public void UpdateCounter(string message)
   {
     Debug.Log("UpdateCounter()");
-    current = (int)message;
+    current = int.Parse(message);
     if (counter == null) {
       // prefab
       GameObject prefab = (GameObject)Resources.Load("Prefabs/Counter");

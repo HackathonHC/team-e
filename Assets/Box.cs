@@ -235,7 +235,11 @@ public class Box : MonoBehaviour {
   {
     var www = new WWW(url);
     yield return www;
+    //sprite.sprite = Sprite.Create(www.texture, new Rect(0,0,www.texture.width,www.texture.height), Vector2.zero);
     sprite.sprite = Sprite.Create(www.texture, new Rect(0,0,www.texture.width,www.texture.height), Vector2.zero);
+    // float _x = (float)(93f * (251f/(float)(www.texture.width*3)));
+    // float _y = (float)(88f * (186f/(float)(www.texture.height*3)));
+    // sprite.transform.parent.transform.localScale = new Vector3(_x, _y, 1f);
     if (correctImage == null) correctImage = sprite.sprite;
   }
 }

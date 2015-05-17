@@ -121,7 +121,7 @@ public class PhotonApp : Photon.MonoBehaviour
     GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
 
     if (GUILayout.Button("Send")) {
-        SendRPC("SendQuestion", "http://img.tiqav.com/5i.jpg,http://img.tiqav.com/5j.jpg");
+        StartCoroutine("Send");
         //StartGame();
         return;
     }
@@ -149,6 +149,17 @@ public class PhotonApp : Photon.MonoBehaviour
     finished = false;
     lose = false;
 
+  }
+
+
+  IEnumerator Send()
+  {
+      var www = new WWW("http://localhost:3000/users/hackathon");
+      yield return www;
+      // Debug.Log(www.text);
+      // JSONObject json = new JSONObject(www.text);
+      // Debug.Log(json.list.Count);
+     PhotonApp.instance.SendRPC("SendQuestion", www.text);
   }
 
   public void StartGame()

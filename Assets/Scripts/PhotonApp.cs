@@ -296,7 +296,7 @@ public class PhotonApp : Photon.MonoBehaviour
       go = (GameObject)Instantiate(prefab);
       go.transform.parent = transform;
       go.transform.localScale = Vector3.one;
-      go.transform.localPosition = new Vector3(-7.9f, -300f, 0f);
+      go.transform.localPosition = new Vector3(-207.9f, -200f, 0f);
       counter = go.GetComponent<Counter>();
     }
     counter.UpdateStr(message);

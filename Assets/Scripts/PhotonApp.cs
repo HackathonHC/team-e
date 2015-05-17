@@ -230,7 +230,7 @@ public class PhotonApp : Photon.MonoBehaviour
     itemsGo = null;
     if (box != null) {
       int[] ids = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 20, 21, 22, 23, 24, 25, 30, 31, 32, 40, 41};
-      itemsGo = box.ShowQuestion(transform, ids[Random.Range(0, ids.Length + 1)]);
+      itemsGo = box.ShowQuestion(transform, ids[Random.Range(0, ids.Length)]);
     }
     PlaySE("question");
   }

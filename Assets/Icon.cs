@@ -7,5 +7,6 @@ public class Icon : MonoBehaviour
   void OnClick () {
     Debug.Log("OnClick");
     PhotonApp.instance.SetTarget(id);
+    PhotonApp.instance.PlaySE("ok2");
   }
 }

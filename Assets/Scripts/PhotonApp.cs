@@ -111,7 +111,7 @@ public class PhotonApp : Photon.MonoBehaviour
       go.transform.parent = transform.Find("others");
       go.transform.localScale = Vector3.one;
       go.transform.localPosition = new Vector3(-200 + (200 * i++), 0, 0);
-      go.GetComponentInChildren<UITexture>().mainTexture = Resources.Load<Texture>("Images/icon_" + i.ToString());
+      go.GetComponentInChildren<UISprite>().spriteName = i.ToString() + "-3";
       go.GetComponent<Icon>().id = (j + 1).ToString();
     }
   }

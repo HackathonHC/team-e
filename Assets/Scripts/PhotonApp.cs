@@ -5,6 +5,13 @@ using System.Linq;
 
 public class PhotonApp : Photon.MonoBehaviour
 {
+  public int difficulty;
+  public float pitch {
+    get {
+      return 1 + ((difficulty / 3) * 0.02f);
+    }
+  }
+  AudioSource bgmSource;
   public GameObject audioGo;
   public List<AudioSource> audios = new List<AudioSource>();
   protected static PhotonApp classInstance;
@@ -171,6 +178,8 @@ public class PhotonApp : Photon.MonoBehaviour
     SendRPC("OnStartGame");
     started = true;
     current = 0;
+    difficulty = 0;
+    bgmSource = transform.Find("BGM").GetComponent<AudioSource>();
   }
 
   public string nextTargetId = "1";
@@ -194,6 +203,7 @@ public class PhotonApp : Photon.MonoBehaviour
         switch (current)
         {
           case 1:
+            bgmSource.pitch = pitch;
             ClearItems();
             statusMessage = "箱が閉まる";
             SendRPC("CloseBox");
@@ -221,6 +231,7 @@ public class PhotonApp : Photon.MonoBehaviour
             break;
           case 8:
             statusMessage = "指名";
+            difficulty++;
             break;
         }
       }
@@ -260,7 +271,13 @@ public class PhotonApp : Photon.MonoBehaviour
     itemsGo = null;
     if (box != null) {
       int[] ids = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 20, 21, 22, 23, 24, 25, 30, 31, 32, 40, 41};
-      itemsGo = box.ShowQuestion(transform, ids[Random.Range(0, ids.Length)]);
+      int questionId = 1;
+      if (difficulty < 3) {
+        questionId = ids[Random.Range(0, 17)];
+      } else {
+        questionId = ids[Random.Range(0, ids.Length)];
+      }
+      itemsGo = box.ShowQuestion(transform, questionId);
     }
     PlaySE("question");
   }

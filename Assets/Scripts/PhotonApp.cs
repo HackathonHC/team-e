@@ -136,6 +136,7 @@ public class PhotonApp : Photon.MonoBehaviour
     TweenPosition.Begin(target.gameObject, 0.2f, target.localPosition + new Vector3(0f, -800f, 0f));
     TweenAlpha.Begin(transform.Find("GameUI").gameObject, 0.2f, 1f);
     PlaySE("start");
+    Music.CurrentSource.Play();
   }
 
   public void StartGame()
@@ -143,7 +144,6 @@ public class PhotonApp : Photon.MonoBehaviour
     Debug.Log("StartGame()");
     SendRPC("OnStartGame");
     started = true;
-    Music.CurrentSource.Play();
   }
 
   public string nextTargetId = "1";

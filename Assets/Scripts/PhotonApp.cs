@@ -233,10 +233,12 @@ public class PhotonApp : Photon.MonoBehaviour
     PlaySE("question");
   }
 
+  public bool answer = false;
   public void Answer(bool correct)
   {
     if (current != 7) return;
     SendRPC("Ans", (correct ? "ok" : "ng"));
+    answer = correct;
   }
 
   public void SetTarget(string id)

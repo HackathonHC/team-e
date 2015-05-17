@@ -142,24 +142,30 @@ public class PhotonApp : Photon.MonoBehaviour
 
   public void StartGame()
   {
+    if (started) return;
     Debug.Log("StartGame()");
     SendRPC("OnStartGame");
     started = true;
+    current = 0;
   }
 
   public string nextTargetId = "1";
   public float time;
   public bool started;
-  public int current = -1;
+  public int current = 0;
+  public int before = -1;
   void Update()
   {
     if (PhotonNetwork.isMasterClient && started) {
       // 拍子を取る
       time += Time.deltaTime;
       int _val = ((int)(time / 0.5207f) % 8) + 1;
-      if (_val != current) {
+      //Debug.LogError(Music.Just.Beat);
+      int _v = Music.Just.Beat;
+      if (_v != before) {
+        before = _v;
         Debug.Log("拍子が変わった");
-        current = _val;
+        current = (current % 8) + 1;
         SendRPC("UpdateCounter", current.ToString());
         switch (current)
         {
@@ -300,6 +306,9 @@ public class PhotonApp : Photon.MonoBehaviour
       counter = go.GetComponent<Counter>();
     }
     counter.UpdateStr(message);
+    foreach (Tempo t in GetComponentsInChildren<Tempo>()) {
+      t.Scale();
+    }
   }
 
   // void OnClick()

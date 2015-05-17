@@ -262,6 +262,7 @@ public class PhotonApp : Photon.MonoBehaviour
   public void CloseBox(string message)
   {
     Debug.Log("CloseBox()");
+    ClearItems();
     if (box != null) {
       box.Close();
     }

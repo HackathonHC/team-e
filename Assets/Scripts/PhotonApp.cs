@@ -234,13 +234,13 @@ public class PhotonApp : Photon.MonoBehaviour
 
   public void Answer(bool correct)
   {
-    if (currnet != 7) return;
+    if (current != 7) return;
     SendRPC("Ans", (correct ? "ok" : "ng"));
   }
 
   public void SetTarget(string id)
   {
-    if (currnet != 8) return;
+    if (current != 8) return;
     SendRPC("SelectTarget", id);
   }
 
@@ -252,7 +252,7 @@ public class PhotonApp : Photon.MonoBehaviour
     } else {
       PlaySE("ng");
     }
-    
+
   }
 
   public void SelectTarget(string message)

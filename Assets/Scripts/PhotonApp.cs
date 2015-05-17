@@ -68,14 +68,14 @@ public class PhotonApp : Photon.MonoBehaviour
   void OnJoinedLobby() {
     //ランダムにルームへ参加
     RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 4 };
-    PhotonNetwork.JoinOrCreateRoom("test4", roomOptions, TypedLobby.Default);
+    PhotonNetwork.JoinOrCreateRoom("test5", roomOptions, TypedLobby.Default);
   }
 
   //ルーム参加失敗時のコールバック
   void OnPhotonRandomJoinFailed() {
     Debug.Log("ルームへの参加に失敗しました");
     //名前のないルームを作成
-    PhotonNetwork.CreateRoom("test4");
+    PhotonNetwork.CreateRoom("test5");
   }
 
   //ルーム参加成功時のコールバック

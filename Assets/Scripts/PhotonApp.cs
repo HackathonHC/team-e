@@ -68,14 +68,14 @@ public class PhotonApp : Photon.MonoBehaviour
   void OnJoinedLobby() {
     //ランダムにルームへ参加
     RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 4 };
-    PhotonNetwork.JoinOrCreateRoom("test4", roomOptions, TypedLobby.Default);
+    PhotonNetwork.JoinOrCreateRoom("test5", roomOptions, TypedLobby.Default);
   }
 
   //ルーム参加失敗時のコールバック
   void OnPhotonRandomJoinFailed() {
     Debug.Log("ルームへの参加に失敗しました");
     //名前のないルームを作成
-    PhotonNetwork.CreateRoom("test4");
+    PhotonNetwork.CreateRoom("test5");
   }
 
   //ルーム参加成功時のコールバック
@@ -140,8 +140,8 @@ public class PhotonApp : Photon.MonoBehaviour
   {
     Transform target = transform.Find("mine");
     TweenPosition.Begin(target.gameObject, 0.2f, target.localPosition + new Vector3(0f, -800f, 0f));
-    target = transform.Find("StartButton");
-    TweenPosition.Begin(target.gameObject, 0.2f, target.localPosition + new Vector3(0f, -800f, 0f));
+    target = transform.Find("Title");
+    TweenPosition.Begin(target.gameObject, 0.2f, target.localPosition + new Vector3(0f, 1200f, 0f));
     TweenAlpha.Begin(transform.Find("others").gameObject, 0.2f, 1f);
     TweenAlpha.Begin(transform.Find("GameUI").gameObject, 0.2f, 1f);
     PlaySE("start");

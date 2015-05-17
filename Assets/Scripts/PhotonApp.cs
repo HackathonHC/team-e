@@ -147,35 +147,6 @@ public class PhotonApp : Photon.MonoBehaviour
     PlaySE("start");
     Music.CurrentSource.Play();
 
-    ShowLife();
-  }
-
-  public void ShowLife() {
-    // prefab
-    GameObject heartGo = (GameObject)Resources.Load("Prefabs/heart");
-
-    // 自分のライフを表示
-    heartGo = (GameObject)Instantiate(heartGo);
-    heartGo.transform.parent = transform.Find("life");
-    heartGo.transform.localScale = Vector3.one;
-    heartGo.transform.localPosition = new Vector3(-150, 0, 0);
-
-    heartGo = (GameObject)Instantiate(heartGo);
-    heartGo.transform.parent = transform.Find("life");
-    heartGo.transform.localScale = Vector3.one;
-    heartGo.transform.localPosition = new Vector3(0, 0, 0);
-
-    heartGo = (GameObject)Instantiate(heartGo);
-    heartGo.transform.parent = transform.Find("life");
-    heartGo.transform.localScale = Vector3.one;
-    heartGo.transform.localPosition = new Vector3(150, 0, 0);
-
-
-    // transform.Find("life").gameObject.transform.localPosition = new Vector3(0, 300, 0);
-    // TweenPosition.Begin(transform.Find("life").gameObject, 0.2f, heartGo.localPosition + new Vector3(0f, -300f, 0f));
-
-
-
   }
 
   public void StartGame()

@@ -330,9 +330,9 @@ Debug.Log(nowLife);
         tw.SetOnFinished(() => {
           TweenScale.Begin(gg, 0.1f, new Vector3(1, 1, 1));
         });
-        SendRPC("Lose");
         lose = true;
         finished = true;
+        SendRPC("Lose");
       }
     }
   }
@@ -343,6 +343,7 @@ Debug.Log(nowLife);
   {
     if (!lose) {
       finished = true;
+      noBoxGo.SetActive(false);
       GameObject gg = transform.Find("GameUI/Win").gameObject;
       gg.SetActive(true);
       gg.transform.localScale = new Vector3(3, 3, 1);

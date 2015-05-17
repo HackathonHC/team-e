@@ -327,6 +327,16 @@ public class PhotonApp : Photon.MonoBehaviour
       PlaySE("ng");
     }
     answer = correct;
+    if (!answer) {
+      GameObject go = counter.transform.FindChild("Life").gameObject;
+      Life life = go.GetComponent<Life>();
+      int nowLife = life.damage();
+Debug.Log(nowLife);
+      if (nowLife == 0) {
+
+      }
+    }
+
   }
 
   public void SetTarget(string id)
@@ -388,7 +398,7 @@ public class PhotonApp : Photon.MonoBehaviour
       go = (GameObject)Instantiate(prefab);
       go.transform.parent = transform;
       go.transform.localScale = Vector3.one;
-      go.transform.localPosition = new Vector3(0f, -300f, 0f);
+      go.transform.localPosition = new Vector3(0f, -420f, 0f);
       counter = go.GetComponent<Counter>();
     }
     counter.UpdateStr(message);

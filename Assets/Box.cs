@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Box : MonoBehaviour {
 
@@ -87,8 +89,8 @@ public class Box : MonoBehaviour {
     baseGo.name = "Items";
 
     GameObject go = (GameObject)Resources.Load("Prefabs/Item");
-
-    for (int i = 0; i < 10; i++) {
+    List<Sprite> sprites = new List<Sprite>();
+    for (int i = 0; i < 6; i++) {
 
         //オブジェクトの座標
         float x = Random.Range(-221, 260);
@@ -96,7 +98,16 @@ public class Box : MonoBehaviour {
         float z = 0.0f;
 
         GameObject item = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
-        item.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Images/item_1_" + Random.Range(1, 4).ToString());
+
+        string name = "Images/question/" + questionId + "-" + (i + 1).ToString();
+        Sprite sprite = Resources.Load<Sprite>(name);
+
+        if (sprite != null) {
+          sprites.Add(sprite);
+        } else {
+          sprite = sprites[Random.Range(1, sprites.Count)];
+        }
+        item.GetComponent<SpriteRenderer>().sprite = sprite;
 
         item.transform.parent = baseGo.transform;
         item.transform.localScale = new Vector3(77.5f, 106.5f, 1);

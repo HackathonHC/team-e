@@ -61,14 +61,14 @@ public class PhotonApp : Photon.MonoBehaviour
   void OnJoinedLobby() {
     //ランダムにルームへ参加
     RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 4 };
-    PhotonNetwork.JoinOrCreateRoom("test", roomOptions, TypedLobby.Default);
+    PhotonNetwork.JoinOrCreateRoom("test1", roomOptions, TypedLobby.Default);
   }
 
   //ルーム参加失敗時のコールバック
   void OnPhotonRandomJoinFailed() {
     Debug.Log("ルームへの参加に失敗しました");
     //名前のないルームを作成
-    PhotonNetwork.CreateRoom("test");
+    PhotonNetwork.CreateRoom("test1");
   }
 
   //ルーム参加成功時のコールバック
@@ -131,9 +131,10 @@ public class PhotonApp : Photon.MonoBehaviour
   public void OnStartGame(string message)
   {
     Transform target = transform.Find("mine");
-    TweenPosition.Begin(target.gameObject, 0.1f, target.localPosition + new Vector3(0f, -800f, 0f));
+    TweenPosition.Begin(target.gameObject, 0.2f, target.localPosition + new Vector3(0f, -800f, 0f));
     target = transform.Find("StartButton");
-    TweenPosition.Begin(target.gameObject, 0.1f, target.localPosition + new Vector3(0f, -800f, 0f));
+    TweenPosition.Begin(target.gameObject, 0.2f, target.localPosition + new Vector3(0f, -800f, 0f));
+    TweenAlpha.Begin(transform.Find("GameUI").gameObject, 0.2f, 1f);
     PlaySE("start");
   }
 
@@ -255,9 +256,6 @@ public class PhotonApp : Photon.MonoBehaviour
       //   TweenPosition tw = TweenPosition.Begin(child.gameObject, 0.1f, new Vector3(1000, 1000, 0));
       //   tw.SetOnFinished(()=> { Destroy(child.gameObject); });
       // }
-    }
-    if (box != null) {
-      box.Close();
     }
   }
 

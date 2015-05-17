@@ -5,6 +5,7 @@ public class Box : MonoBehaviour {
 
   /// <para>アイテムリスト</para>
   private GameObject[] itemList;
+  public Script_SpriteStudio_PartsRoot anim;
 
 	// Use this for initialization
 	void Start () {
@@ -21,13 +22,19 @@ public class Box : MonoBehaviour {
   /// </summary>
   public static Box Show(Transform parent) {
 
-    GameObject go = (GameObject)Resources.Load("Prefabs/Box");
-    GameObject box = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
-    box.transform.parent = parent;
-    box.transform.localScale = new Vector3(1.0f, 2.0f, 0.0f);
-    box.transform.localPosition = new Vector3(520.0f, -300.0f, 0.0f);
-    TweenPosition _tween = TweenPosition.Begin(box, 0.05f, new Vector3(1.0f , -300.0f, 0.0f));
-    return box.GetComponent<Box>();
+    GameObject go = (GameObject)Resources.Load("SS/box/Prefab/boxBase");
+    GameObject boxGo = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
+    boxGo.transform.parent = parent;
+    boxGo.transform.localScale = Vector3.one;
+    boxGo.transform.localPosition = new Vector3(520.0f, -506.0f, 0.0f);
+    TweenPosition _tween = TweenPosition.Begin(boxGo, 0.05f, boxGo.transform.localPosition + new Vector3(-520, 0, 0));
+    Box box = boxGo.GetComponent<Box>();
+    box.anim = boxGo.GetComponentInChildren<Script_SpriteStudio_PartsRoot>();
+    box.anim.AnimationNo = box.anim.AnimationGetIndexNo("none");
+    box.anim.PlayTimes = 1;
+    box.anim.AnimationStop();
+    Debug.Log("box.anim.AnimationStop");
+    return box;
   }
 
   /// <summary>
@@ -35,8 +42,21 @@ public class Box : MonoBehaviour {
   /// </summary>
   public void Hide()
   {
-    TweenPosition _tween = TweenPosition.Begin(gameObject, 0.05f, new Vector3(-500.0f , -300.0f, 0.0f));
-    _tween.SetOnFinished(()=> { Destroy(this); });
+    TweenPosition _tween = TweenPosition.Begin(gameObject, 0.05f, transform.localPosition + new Vector3(-600.0f, 0f, 0f));
+    _tween.AddOnFinished(()=> { Destroy(this); });
+  }
+
+  /// <summary>
+  /// ふたを開く
+  /// </summary>
+  public void Open()
+  {
+    anim.AnimationNo = anim.AnimationGetIndexNo("hiraku");
+    anim.RateTimeAnimation = 1;
+    anim.PlayTimes = 1;
+    //anim.FunctionPlayEnd = _finishedCallback;
+    anim.AnimationPlay();
+
   }
 
   /// <summary>
@@ -44,7 +64,12 @@ public class Box : MonoBehaviour {
   /// </summary>
   public void Close()
   {
-    // 未実装
+    anim.AnimationNo = anim.AnimationGetIndexNo("simaru");
+    anim.RateTimeAnimation = 1;
+    anim.PlayTimes = 1;
+    //anim.FunctionPlayEnd = _finishedCallback;
+    anim.AnimationPlay();
+
   }
 
   /// <summary>
@@ -53,6 +78,7 @@ public class Box : MonoBehaviour {
   public GameObject ShowQuestion(Transform parent, int questionId) {
 
     // TODO:questionIdに基いて問題を生成する
+    Open();
 
     GameObject baseGo = new GameObject();
     baseGo.transform.parent = parent;

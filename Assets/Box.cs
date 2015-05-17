@@ -22,14 +22,30 @@ public class Box : MonoBehaviour {
   /// <summary>
   /// 表示移動
   /// </summary>
-  public static Box Show(Transform parent) {
+  public static Box Show(Transform parent, string playerId = "") {
 
     GameObject go = (GameObject)Resources.Load("SS/box/Prefab/boxBase");
     GameObject boxGo = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
     boxGo.transform.parent = parent;
-    boxGo.transform.localScale = Vector3.one;
-    boxGo.transform.localPosition = new Vector3(520.0f, -506.0f, 0.0f);
-    TweenPosition _tween = TweenPosition.Begin(boxGo, 0.05f, boxGo.transform.localPosition + new Vector3(-520, 0, 0));
+
+    if (playerId == "") {
+      // 自分が回答者
+      boxGo.transform.localScale = Vector3.one;
+      boxGo.transform.localPosition = new Vector3(520.0f, -506.0f, 0.0f);
+      TweenPosition _tween = TweenPosition.Begin(boxGo, 0.05f, boxGo.transform.localPosition + new Vector3(-520, 0, 0));
+    } else {
+      // 他人が回答者
+      int j = 0;
+      foreach (Icon i in parent.gameObject.GetComponentsInChildren<Icon>()) {
+        if (i.id == playerId) {
+          boxGo.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+          boxGo.transform.localPosition = new Vector3(520.0f, 350.0f, 0.0f);
+          TweenPosition _tween = TweenPosition.Begin(boxGo, 0.05f, boxGo.transform.localPosition + new Vector3(-680 + (200 * j), 0, 0));
+        }
+        j++;
+      }
+    }
+    
     Box box = boxGo.GetComponent<Box>();
     box.anim = boxGo.GetComponentInChildren<Script_SpriteStudio_PartsRoot>();
     box.anim.AnimationNo = box.anim.AnimationGetIndexNo("none");

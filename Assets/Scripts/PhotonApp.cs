@@ -98,10 +98,10 @@ public class PhotonApp : Photon.MonoBehaviour
 
     // 自分のアイコンを表示
     GameObject go;
-    go = (GameObject)Instantiate(prefab);
-    go.transform.parent = transform.Find("mine");
-    go.transform.localScale = Vector3.one;
-    go.transform.localPosition = Vector3.zero;
+    // go = (GameObject)Instantiate(prefab);
+    // go.transform.parent = transform.Find("mine");
+    // go.transform.localScale = Vector3.one;
+    // go.transform.localPosition = Vector3.zero;
 
     // 他プレイヤーのアイコンを表示
     int i = 0;
@@ -307,7 +307,17 @@ public class PhotonApp : Photon.MonoBehaviour
       int nowLife = life.damage();
 Debug.Log(nowLife);
       if (nowLife == 0) {
-
+        ClearItems();
+        foreach (Tempo t in GetComponentsInChildren<Tempo>()) {
+          t.Stop();
+        }
+        GameObject gg = transform.Find("GameUI/Lose").gameObject;
+        gg.SetActive(true);
+        gg.transform.localScale = new Vector3(3, 3, 1);
+        TweenScale tw = TweenScale.Begin(gg, 0.2f, new Vector3(0.8f, 0.8f, 1));
+        tw.SetOnFinished(() => {
+          TweenScale.Begin(gg, 0.1f, new Vector3(1, 1, 1));
+        });
       }
     }
 

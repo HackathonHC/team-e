@@ -13,6 +13,7 @@ public class Item : MonoBehaviour {
 
   private bool isClick = false;
   public void OnClick() {
+    if (PhotonApp.instance.answer) return;
     if (this.isClick) {return;}
     if (this.correct) {
       Debug.Log("【やったね】正解アイテム押したよ");

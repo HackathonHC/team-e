@@ -98,8 +98,9 @@ public class Box : MonoBehaviour {
       new Vector3(218, -238, 0),
       new Vector3(218, 21, 0)
     };
-    positions.RandomShuffle();
+    positions = new List<Vector3>(positions.RandomShuffle());
     GameObject itemGo;
+    Debug.Log(positions[0]);
     for (int i = 0; i < 6; i++) {
 
         itemGo = (GameObject)Instantiate(go, Vector3.zero, Quaternion.identity);
@@ -139,10 +140,7 @@ public static class ShuffleExtensions
     public static IEnumerable<tsource>
            RandomShuffle<tsource>(this IEnumerable<tsource> source)
     {
-        return source.Select(t => new {
-                Index = System.Guid.NewGuid(),
-                Value = t })
-            .OrderBy(p => p.Index)
-            .Select(p => p.Value);
+        System.Random rnd = new System.Random();
+        return source.OrderBy<tsource, int>((item) => rnd.Next());
     }
 }

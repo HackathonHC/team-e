@@ -162,6 +162,7 @@ public class PhotonApp : Photon.MonoBehaviour
         switch (current)
         {
           case 1:
+            ClearItems();
             statusMessage = "箱が閉まる";
             SendRPC("CloseBox");
             break;
@@ -258,10 +259,16 @@ public class PhotonApp : Photon.MonoBehaviour
   public void SelectTarget(string message)
   {
     Debug.Log("SelectTarget()");
+    ClearItems();
+    nextTargetId = message;
+  }
+
+  void ClearItems()
+  {
     if (itemsGo != null) {
       Destroy(itemsGo);
+      itemsGo = null;
     }
-    nextTargetId = message;
   }
 
   public Counter counter;
